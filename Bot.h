@@ -1,7 +1,6 @@
 #ifndef GAME_WITH_AI__BOT_H_
 #define GAME_WITH_AI__BOT_H_
 
-#include "SearchTree.h"
 #include "GameManager.h"
 #include <utility>
 #include <SFML/Graphics.hpp>
@@ -26,7 +25,6 @@ class Bot {
                            GameManager game_manager);
 
   bool white_ = false;
-  SearchTree search_tree_;
 };
 
 #endif
