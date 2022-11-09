@@ -40,7 +40,7 @@ std::vector<std::vector<int>> Bot::GetProfit(bool color) {
         for (int j = 0; j < 8; ++j) {
             if (!im_field_[i][j])
                 continue;
-            int res = -5;
+            int res = 0;
 
             if (im_field_[i][j] < 0 && i == 0 || im_field_[i][j] > 0 && i == 7)
                 res -= 1;
@@ -72,7 +72,7 @@ std::vector<std::vector<int>> Bot::GetProfit(bool color) {
             if (i < 7 && j > 0 && (im_field_[i + 1][j - 1] > 0) != color)
                 res += 2;
 
-            profit_matrix[i][j] = res * (color == im_field_[i][j] > 0 ? 1 : -1);
+            profit_matrix[i][j] = res * (color == im_field_[i][j] > 0 ? 1 : -1) + 5 * (color == im_field_[i][j] > 0 ? -1 : 1);
         }
     }
 
@@ -142,12 +142,6 @@ std::pair<sf::Vector2i, sf::Vector2i> Bot::CalculateBestMove(GameManager &game_m
         base_field = game_manager.GetField();
     im_field_ = base_field;
 
-    auto moves = GetAllMoves(color);
-    if (moves.empty()) {
-//        std::cout << (color ? "W":"B") << "\n";
-        return {best_from, best_to};
-    }
-
     int base_profit = cur_profit_;
     if (!depth)
         base_profit = 0;
@@ -160,6 +154,12 @@ std::pair<sf::Vector2i, sf::Vector2i> Bot::CalculateBestMove(GameManager &game_m
     im_eat_again_ = base_again;
 
     auto bst = im_field_;
+
+    auto moves = GetAllMoves(color);
+    if (moves.empty()) {
+//        std::cout << (color ? "W":"B") << "\n";
+        return {best_from, best_to};
+    }
 
     for (auto m: moves) {
         sf::Vector2i from = m.first, to = m.second;
@@ -231,12 +231,16 @@ std::pair<sf::Vector2i, sf::Vector2i> Bot::CalculateBestMove(GameManager &game_m
 
 std::pair<sf::Vector2i, sf::Vector2i> Bot::CalculateRandomMove(GameManager &game_manager) {
     if (game_manager.GameOver()) {
-        std::cout << "NIGGER\n";
+//        std::cout << "NIGGER\n";
         return {{0, 0}, {0, 0}};
     }
 
     im_field_ = game_manager.GetField();
     auto moves = GetAllMoves(white_);
+
+    if (moves.empty()) {
+        return {{0, 0}, {0, 0}};
+    }
 
     dis = std::uniform_int_distribution<>(0, moves.size() - 1);
 

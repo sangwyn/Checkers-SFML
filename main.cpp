@@ -141,6 +141,10 @@ int main() {
 
         window.display();
 
+//        if (player_white == game_manager.WhoseTurn() && cur_bot != -1) {
+//            player_white = !player_white;
+//            bots[cur_bot]->ChangeColor();
+//        }
         if (!game_over && cur_bot != -1 && player_white != game_manager.WhoseTurn()) {
             sf::sleep(sf::seconds(0.3f));
             game_manager.Move(bots[cur_bot]->CalculateMove(game_manager));
