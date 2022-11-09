@@ -3,6 +3,8 @@
 
 #include "SFML/Graphics.hpp"
 
+const int kMaxDepth = 4;
+
 const sf::Vector2u kResolution = {1600, 900};
 
 const float kCellSize = 100;

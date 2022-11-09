@@ -96,7 +96,8 @@ int main() {
                     game_manager.NewGame();
                     cur_bot = 2;
                     cur_bot_text.setString("Hard");
-                } else if (!game_over && (cur_bot == -1 || player_white == game_manager.WhoseTurn())) {
+                } else if (!game_over
+                    && (cur_bot == -1 || player_white == game_manager.WhoseTurn())) {
                     game_manager.HandleClick((sf::Vector2f) sf::Mouse::getPosition(
                         window));
                 }
@@ -109,7 +110,8 @@ int main() {
         mbot_btn.SetSelection(mbot_btn.MouseOver((sf::Vector2f) sf::Mouse::getPosition(window)));
         hbot_btn.SetSelection(hbot_btn.MouseOver((sf::Vector2f) sf::Mouse::getPosition(window)));
         if (cur_bot != -1)
-            reverse_btn.SetSelection(reverse_btn.MouseOver((sf::Vector2f) sf::Mouse::getPosition(window)));
+            reverse_btn.SetSelection(reverse_btn.MouseOver((sf::Vector2f) sf::Mouse::getPosition(
+                window)));
 
         window.clear(kBackgroundColor);
 
@@ -131,7 +133,8 @@ int main() {
             } else {
                 gameover_text.setString("BLACK WIN!");
             }
-            gameover_text.setOrigin(gameover_text.getGlobalBounds().width / 2, gameover_text.getGlobalBounds().height / 2);
+            gameover_text.setOrigin(gameover_text.getGlobalBounds().width / 2,
+                                    gameover_text.getGlobalBounds().height / 2);
             gameover_text.setPosition(800, 450);
             window.draw(gameover_text);
         }
@@ -139,7 +142,7 @@ int main() {
         window.display();
 
         if (!game_over && cur_bot != -1 && player_white != game_manager.WhoseTurn()) {
-            sf::sleep(sf::seconds(0.5f));
+            sf::sleep(sf::seconds(0.3f));
             game_manager.Move(bots[cur_bot]->CalculateMove(game_manager));
         }
     }

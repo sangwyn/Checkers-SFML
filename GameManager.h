@@ -17,9 +17,9 @@ class GameManager {
   bool WhoseTurn() { return white_turn_; }
   bool GameOver() { return game_over_; }
   bool WhiteWin();
-  bool CanEat(int i, int j) {return can_eat_[i][j]; }
+  bool CanEat(int i, int j) { return can_eat_[i][j]; }
   std::vector<std::vector<int>> GetField() { return field_; }
-  sf::Vector2i EatAgainPos() { return (eat_again_ ? eat_again_pos_ : sf::Vector2i {-1, -1}); }
+  sf::Vector2i EatAgainPos() { return (eat_again_ ? eat_again_pos_ : sf::Vector2i{-1, -1}); }
 
   // -1 = player, 0 = easy, 1 = medium, 2 = hard
 //  void SetDifficulty(int difficulty) { cur_bot_ = difficulty; };
@@ -33,8 +33,8 @@ class GameManager {
   std::vector<sf::Vector2i> GetPossibleMoves(sf::Vector2i pos);
   std::vector<sf::Vector2i> GetPossibleMoves(int i, int j);
 
-  std::vector<sf::Vector2i> GetPossibleEats(sf::Vector2i pos, bool all = false);
-  std::vector<sf::Vector2i> GetPossibleEats(int i, int j, bool all = false);
+  std::vector<sf::Vector2i> GetPossibleEats(sf::Vector2i pos, bool all = true);
+  std::vector<sf::Vector2i> GetPossibleEats(int i, int j, bool all = true);
 
   void Move(int from_i, int from_j, int to_i, int to_j);
   void Move(sf::Vector2i from, sf::Vector2i to);

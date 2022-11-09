@@ -97,22 +97,6 @@ build CMakeFiles/game_with_ai.dir/GameManager.cpp.obj: CXX_COMPILER__game_with_a
   OBJECT_DIR = CMakeFiles\game_with_ai.dir
   OBJECT_FILE_DIR = CMakeFiles\game_with_ai.dir
 
-build CMakeFiles/game_with_ai.dir/SearchTreeNode.cpp.obj: CXX_COMPILER__game_with_ai_Debug D$:/coding$ time/praks/game_with_ai/SearchTreeNode.cpp || cmake_object_order_depends_target_game_with_ai
-  DEFINES = -DSFML_STATIC
-  DEP_FILE = CMakeFiles\game_with_ai.dir\SearchTreeNode.cpp.obj.d
-  FLAGS = -g
-  INCLUDES = -isystem "D:/coding time/praks/game_with_ai/SFML-2.5.1/include"
-  OBJECT_DIR = CMakeFiles\game_with_ai.dir
-  OBJECT_FILE_DIR = CMakeFiles\game_with_ai.dir
-
-build CMakeFiles/game_with_ai.dir/SearchTree.cpp.obj: CXX_COMPILER__game_with_ai_Debug D$:/coding$ time/praks/game_with_ai/SearchTree.cpp || cmake_object_order_depends_target_game_with_ai
-  DEFINES = -DSFML_STATIC
-  DEP_FILE = CMakeFiles\game_with_ai.dir\SearchTree.cpp.obj.d
-  FLAGS = -g
-  INCLUDES = -isystem "D:/coding time/praks/game_with_ai/SFML-2.5.1/include"
-  OBJECT_DIR = CMakeFiles\game_with_ai.dir
-  OBJECT_FILE_DIR = CMakeFiles\game_with_ai.dir
-
 build CMakeFiles/game_with_ai.dir/Button.cpp.obj: CXX_COMPILER__game_with_ai_Debug D$:/coding$ time/praks/game_with_ai/Button.cpp || cmake_object_order_depends_target_game_with_ai
   DEFINES = -DSFML_STATIC
   DEP_FILE = CMakeFiles\game_with_ai.dir\Button.cpp.obj.d
@@ -129,7 +113,7 @@ build CMakeFiles/game_with_ai.dir/Button.cpp.obj: CXX_COMPILER__game_with_ai_Deb
 #############################################
 # Link the executable game_with_ai.exe
 
-build game_with_ai.exe: CXX_EXECUTABLE_LINKER__game_with_ai_Debug CMakeFiles/game_with_ai.dir/main.cpp.obj CMakeFiles/game_with_ai.dir/Bot.cpp.obj CMakeFiles/game_with_ai.dir/EasyBot.cpp.obj CMakeFiles/game_with_ai.dir/MediumBot.cpp.obj CMakeFiles/game_with_ai.dir/HardBot.cpp.obj CMakeFiles/game_with_ai.dir/GameManager.cpp.obj CMakeFiles/game_with_ai.dir/SearchTreeNode.cpp.obj CMakeFiles/game_with_ai.dir/SearchTree.cpp.obj CMakeFiles/game_with_ai.dir/Button.cpp.obj | ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-audio-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libfreetype.a ../SFML-2.5.1/lib/libopenal32.a ../SFML-2.5.1/lib/libsfml-system-s-d.a ../SFML-2.5.1/lib/libvorbisfile.a ../SFML-2.5.1/lib/libvorbisenc.a ../SFML-2.5.1/lib/libvorbis.a ../SFML-2.5.1/lib/libogg.a ../SFML-2.5.1/lib/libFLAC.a
+build game_with_ai.exe: CXX_EXECUTABLE_LINKER__game_with_ai_Debug CMakeFiles/game_with_ai.dir/main.cpp.obj CMakeFiles/game_with_ai.dir/Bot.cpp.obj CMakeFiles/game_with_ai.dir/EasyBot.cpp.obj CMakeFiles/game_with_ai.dir/MediumBot.cpp.obj CMakeFiles/game_with_ai.dir/HardBot.cpp.obj CMakeFiles/game_with_ai.dir/GameManager.cpp.obj CMakeFiles/game_with_ai.dir/Button.cpp.obj | ../SFML-2.5.1/lib/libsfml-graphics-s-d.a ../SFML-2.5.1/lib/libsfml-audio-s-d.a ../SFML-2.5.1/lib/libsfml-window-s-d.a ../SFML-2.5.1/lib/libfreetype.a ../SFML-2.5.1/lib/libopenal32.a ../SFML-2.5.1/lib/libsfml-system-s-d.a ../SFML-2.5.1/lib/libvorbisfile.a ../SFML-2.5.1/lib/libvorbisenc.a ../SFML-2.5.1/lib/libvorbis.a ../SFML-2.5.1/lib/libogg.a ../SFML-2.5.1/lib/libFLAC.a
   FLAGS = -g
   LINK_LIBRARIES = ../SFML-2.5.1/lib/libsfml-graphics-s-d.a  ../SFML-2.5.1/lib/libsfml-audio-s-d.a  ../SFML-2.5.1/lib/libsfml-window-s-d.a  -lgdi32  -lOpenGL32  ../SFML-2.5.1/lib/libfreetype.a  ../SFML-2.5.1/lib/libopenal32.a  ../SFML-2.5.1/lib/libsfml-system-s-d.a  -lwinmm  ../SFML-2.5.1/lib/libvorbisfile.a  ../SFML-2.5.1/lib/libvorbisenc.a  ../SFML-2.5.1/lib/libvorbis.a  ../SFML-2.5.1/lib/libogg.a  ../SFML-2.5.1/lib/libFLAC.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\game_with_ai.dir

@@ -35,6 +35,7 @@ GameManager::GameManager() {
     }
     checker_sprite_.setOutlineThickness(2);
     checker_sprite_.setRadius(kCellSize / 2);
+    checker_sprite_.setPointCount(5000);
 
     selected_sprite_.setRadius(kCellSize / 8);
     selected_sprite_.setOutlineColor(kCellOutlineColor);
@@ -42,6 +43,7 @@ GameManager::GameManager() {
     selected_sprite_.setFillColor(kSelectedColor);
     selected_sprite_.setOrigin({selected_sprite_.getRadius(),
                                 selected_sprite_.getRadius()});
+    selected_sprite_.setPointCount(5000);
 
     crown_texture_.loadFromFile("Assets/crown.png");
     crown_sprite_.setTexture(crown_texture_);
@@ -287,40 +289,54 @@ std::vector<sf::Vector2i> GameManager::GetPossibleEats(int i, int j, bool all) {
     bool white = field_[i][j] > 0;
 
     if (abs(field_[i][j]) == 1) {
-        if (field_[i][j] == 1 || all) {
-            if (i > 1 && j > 1 && (white && field_[i - 1][j - 1] < 0 || !white && field_[i - 1][j - 1] > 0) && !field_[i - 2][j - 2]) {
-                moves.push_back({i - 2, j - 2});
-
-            }
-            if (i > 1 && j < 6 && (white && field_[i - 1][j + 1] < 0 || !white && field_[i - 1][j + 1] > 0) && !field_[i - 2][j + 2]) {
-                moves.push_back({i - 2, j + 2});
-            }
+//        if (field_[i][j] == 1 || all) {
+        if (i > 1 && j > 1
+            && (white && field_[i - 1][j - 1] < 0 || !white && field_[i - 1][j - 1] > 0)
+            && !field_[i - 2][j - 2]) {
+            moves.push_back({i - 2, j - 2});
 
         }
-        if (field_[i][j] == -1 || all) {
-            if (i < 6 && j > 1 && (white && field_[i + 1][j - 1] < 0 || !white && field_[i + 1][j - 1] > 0) && !field_[i + 2][j - 2]) {
-                moves.push_back({i + 2, j - 2});
+        if (i > 1 && j < 6
+            && (white && field_[i - 1][j + 1] < 0 || !white && field_[i - 1][j + 1] > 0)
+            && !field_[i - 2][j + 2]) {
+            moves.push_back({i - 2, j + 2});
+        }
 
-            }
-            if (i < 6 && j < 6 && (white && field_[i + 1][j + 1] < 0 || !white && field_[i + 1][j + 1] > 0) && !field_[i + 2][j + 2]) {
-                moves.push_back({i + 2, j + 2});
-            }
+//        }
+//        if (field_[i][j] == -1 || all) {
+        if (i < 6 && j > 1
+            && (white && field_[i + 1][j - 1] < 0 || !white && field_[i + 1][j - 1] > 0)
+            && !field_[i + 2][j - 2]) {
+            moves.push_back({i + 2, j - 2});
 
         }
+        if (i < 6 && j < 6
+            && (white && field_[i + 1][j + 1] < 0 || !white && field_[i + 1][j + 1] > 0)
+            && !field_[i + 2][j + 2]) {
+            moves.push_back({i + 2, j + 2});
+        }
+
+//        }
     } else if (abs(field_[i][j]) == 2) {
 
         bool go = true;
+        bool eating = false;
         int x = i + 1, y = j + 1;
-        while (go && x < 7 && y < 7) {
-            if (field_[x][y]) {
+        while (go && x <= 7 && y <= 7) {
+            if (field_[x][y] && x < 7 && y < 7) {
+                if (eating) {
+                    go = false;
+                    break;
+                }
                 if (field_[x][y] > 0 && white || field_[x][y] < 0 && !white
                     || field_[x + 1][y + 1]) {
                     go = false;
                     break;
                 }
                 moves.push_back({x + 1, y + 1});
-                go = false;
-                break;
+                eating = true;
+            } else if (!field_[x][y] && eating) {
+                moves.push_back({x, y});
             }
 
             ++x;
@@ -328,54 +344,72 @@ std::vector<sf::Vector2i> GameManager::GetPossibleEats(int i, int j, bool all) {
         }
 
         go = true;
+        eating = false;
         x = i + 1;
         y = j - 1;
-        while (go && x < 7 && y > 0) {
-            if (field_[x][y]) {
+        while (go && x <= 7 && y >= 0) {
+            if (field_[x][y] && x < 7 && y > 0) {
+                if (eating) {
+                    go = false;
+                    break;
+                }
                 if (field_[x][y] > 0 && white || field_[x][y] < 0 && !white
                     || field_[x + 1][y - 1]) {
                     go = false;
                     break;
                 }
                 moves.push_back({x + 1, y - 1});
-                go = false;
-                break;
+                eating = true;
+            } else if (!field_[x][y] && eating) {
+                moves.push_back({x, y});
             }
             ++x;
             --y;
         }
 
         go = true;
+        eating = false;
         x = i - 1;
         y = j - 1;
-        while (go && x > 0 && y > 0) {
-            if (field_[x][y]) {
+        while (go && x >= 0 && y >= 0) {
+            if (field_[x][y] && x > 0 && y > 0) {
+                if (eating) {
+                    go = false;
+                    break;
+                }
                 if (field_[x][y] > 0 && white || field_[x][y] < 0 && !white
                     || field_[x - 1][y - 1]) {
                     go = false;
                     break;
                 }
                 moves.push_back({x - 1, y - 1});
-                go = false;
-                break;
+                eating = true;
+            } else if (!field_[x][y] && eating) {
+                moves.push_back({x, y});
             }
             --x;
             --y;
         }
 
         go = true;
+        eating = false;
         x = i - 1;
         y = j + 1;
-        while (go && x > 0 && y < 7) {
-            if (field_[x][y]) {
+        while (go && x >= 0 && y <= 7) {
+            if (field_[x][y] && x > 0 && y < 7) {
+                if (eating) {
+                    go = false;
+                    break;
+                }
                 if (field_[x][y] > 0 && white || field_[x][y] < 0 && !white
                     || field_[x - 1][y + 1]) {
                     go = false;
                     break;
                 }
                 moves.push_back({x - 1, y + 1});
-                go = false;
-                break;
+                eating = true;
+            } else if (!field_[x][y] && eating) {
+                moves.push_back({x, y});
             }
             --x;
             ++y;
@@ -400,7 +434,7 @@ void GameManager::Move(int from_i, int from_j, int to_i, int to_j) {
 //    std::cout << from_i << ' ' << from_j << ' ' << to_i << ' ' << to_j << '\n';
 
     std::swap(field_[from_i][from_j], field_[to_i][to_j]);
-    if (to_i == 0 || to_i == 7)
+    if (to_i == 0 && field_[to_i][to_j] > 0 || to_i == 7 && field_[to_i][to_j] < 0)
         field_[to_i][to_j] = (field_[to_i][to_j] > 0 ? 2 : -2);
 
     if (abs(to_i - from_i) > 1 || abs(to_j - from_j) > 1) {
@@ -443,7 +477,7 @@ void GameManager::Move(int from_i, int from_j, int to_i, int to_j) {
 //        std::cout << "\n\n";
         auto eats = GetPossibleEats(to_i, to_j, true);
         if (!eats.empty() && eaten) {
-//            Move(to_i, to_j, eats[0].x, eats[0].y);
+//            Move(to_i, to_j, eats_[0].x, eats_[0].y);
             white_turn_ = !white_turn_;
 
             can_eat_.assign(8, std::vector<bool>(8, false));
@@ -456,15 +490,22 @@ void GameManager::Move(int from_i, int from_j, int to_i, int to_j) {
 }
 
 void GameManager::DrawField(sf::RenderWindow &window) {
-    int blacks = 0, whites = 0;
+    int blacks = 0, whites = 0, white_move = 0, black_move = 0;
     if (!eat_again_)
         can_eat_.assign(8, std::vector<bool>(8, false));
     for (int x = 0; x < 8; ++x) {
         for (int y = 0; y < 8; ++y) {
-            if (field_[x][y] > 0)
+            if (field_[x][y] > 0) {
                 ++whites;
-            else if (field_[x][y] < 0)
+
+                if (!GetPossibleMoves(x, y).empty() || !GetPossibleEats(x, y).empty())
+                    ++white_move;
+            } else if (field_[x][y] < 0) {
                 ++blacks;
+
+                if (!GetPossibleMoves(x, y).empty() || !GetPossibleEats(x, y).empty())
+                    ++black_move;
+            }
 
             if (!eat_again_ && (white_turn_ && field_[x][y] > 0
                 || !white_turn_ && field_[x][y] < 0)) {
@@ -475,7 +516,9 @@ void GameManager::DrawField(sf::RenderWindow &window) {
             }
         }
     }
-    if (!blacks || !whites) {
+    if (!blacks || !whites || !white_move || !black_move) {
+        if (!white_move || !black_move)
+            white_turn_ = !white_turn_;
         game_over_ = true;
     }
 
@@ -487,7 +530,7 @@ void GameManager::DrawField(sf::RenderWindow &window) {
     for (int i = 0; i < 8; ++i) {
         checker_sprite_.setPosition({kFieldPos.x, kFieldPos.y + i * kCellSize});
         for (int j = 0; j < 8; ++j) {
-            if (can_eat_[i][j]) {
+            if (can_eat_[i][j] && !game_over_) {
                 checker_sprite_.setOutlineColor(kSelectedColor);
             } else {
                 checker_sprite_.setOutlineColor(sf::Color::Transparent);
@@ -508,7 +551,7 @@ void GameManager::DrawField(sf::RenderWindow &window) {
                 window.draw(crown_sprite_);
             }
 
-            if (selected_[i][j]) {
+            if (selected_[i][j] && !game_over_) {
                 selected_sprite_.setPosition({checker_sprite_.getPosition().x
                                                   + kCellSize / 2,
                                               checker_sprite_.getPosition().y
@@ -531,8 +574,9 @@ void GameManager::DrawField(sf::RenderWindow &window) {
         }
     }
 
-    cur_turn_text_.setString(white_turn_ ? "White" : "Black");
-    window.draw(cur_turn_text_);
+    cur_turn_text_.setString(white_turn_ ? "White turn" : "Black turn");
+    if (!game_over_)
+        window.draw(cur_turn_text_);
 //    for (int i = 0; i < 8; ++i) {
 //        for (int j = 0; j < 8; ++j) {
 //            std::cout << field_[i][j] << ' ';
